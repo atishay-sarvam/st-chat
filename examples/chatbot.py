@@ -4,7 +4,7 @@ import requests
 import time
 
 st.set_page_config(
-    page_title="Streamlit Chat - Demo",
+    page_title="Sarvam Chat - Demo",
     page_icon=":robot:"
 )
 
@@ -19,11 +19,6 @@ access_code = st.text_input(
 )
 
 headers = {"X-API-Key":access_code}
-
-if st.button('Reset'):
-    st.session_state['generated'] = []
-    st.session_state['session_id'] = ""
-    st.session_state['past'] = []
 
 if 'generated' not in st.session_state:
     st.session_state['generated'] = []
@@ -44,6 +39,12 @@ def clear_text():
 
 st.text_input(label="User Input",key="widget",on_change=clear_text())
 user_input = st.session_state.get('my_text', '')
+if st.button('Reset'):
+    st.session_state['generated'] = []
+    st.session_state['session_id'] = ""
+    st.session_state['past'] = []
+
+
 if user_input:
     output = query({
         "data": {
@@ -58,7 +59,8 @@ if user_input:
 
 if st.session_state['generated']:
 
-    for i in range(len(st.session_state['generated'])-1, -1, -1):
-        message(st.session_state["generated"][i], key=str(i))
+    for i in range(len(st.session_state['generated'])):
         message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
+        message(st.session_state["generated"][i], key=str(i))
+        
 
