@@ -18,15 +18,12 @@ access_code = st.text_input(
     type="password",
 )
 
-while True:    
-    if access_code:
-        break
-    else:
-        print("sleepy")
-        time.sleep(1)
 headers = {"X-API-Key":access_code}
 
-
+if st.button('Reset'):
+    st.session_state['generated'] = []
+    st.session_state['session_id'] = ""
+    st.session_state['past'] = []
 
 if 'generated' not in st.session_state:
     st.session_state['generated'] = []
