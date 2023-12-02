@@ -38,11 +38,8 @@ def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
 	return response.json()
 
-def get_text():
-    input_text = st.text_input("You: ","Hello, how are you?", key="input")
-    return input_text 
 
-user_input = get_text()
+user_input = st.text_input()
 if user_input:
     output = query({
         "data": {
