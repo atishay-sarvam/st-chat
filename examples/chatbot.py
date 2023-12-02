@@ -30,6 +30,7 @@ if 'generated' not in st.session_state:
 
 if 'past' not in st.session_state:
     st.session_state['past'] = []
+    st.session_state["widget"] = ""
 if 'session_id' not in st.session_state:
     st.session_state['session_id'] = ""
 
@@ -37,9 +38,12 @@ if 'session_id' not in st.session_state:
 def query(payload):
 	response = requests.post(API_URL, headers=headers, json=payload)
 	return response.json()
+def clear_text():
+    st.session_state.my_text = st.session_state.widget
+    st.session_state.widget = ""
 
-
-user_input = st.text_input(label="User Input")
+st.text_input(label="User Input",key="widget",on_change=clear_text())
+user_input = st.session_state.get('my_text', '')
 if user_input:
     output = query({
         "data": {
