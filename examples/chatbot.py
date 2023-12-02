@@ -39,7 +39,7 @@ def query(payload):
 	return response.json()
 
 
-user_input = st.text_input()
+user_input = st.text_input(label="User Input")
 if user_input:
     output = query({
         "data": {
